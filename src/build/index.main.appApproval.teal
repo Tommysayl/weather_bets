@@ -1,0 +1,921 @@
+#pragma version 8
+// resource: R_Txn
+txn ApplicationID
+bz alloc
+byte base64()
+app_global_get
+dup
+int 0
+extract_uint64
+store 1 // GV_currentStep :: UInt
+int 8
+extract_uint64
+store 2 // GV_currentTime :: UInt
+byte base64(AA==)
+app_global_get
+byte base64(AQ==)
+app_global_get
+concat
+preamble:
+pushbytess base64(Ch0mSQ==) base64(G275UA==) base64(dQ7kBg==) base64(hGNipQ==) base64(pHE8lg==) base64(rkTy3w==) base64(yNBQsQ==) base64(4lfE+Q==) base64(5Tps7g==) base64(7G85Dw==) base64(/0yWvQ==)
+txna ApplicationArgs 0
+match _reachp_3 _reachp_5 _reachp_2 _reachp_4 _reachp_0 _reachp_10 _reachp_1 _reachp_7 _reachp_6 _reachp_9 _reachp_8
+errl:
+err
+_reachi_0:
+txn Sender
+store 20 // Bettor/278
+load 12 // v701
+int 0
+extract_uint64
+store 13 // v700
+load 12 // v701
+int 8
+extract_uint64
+store 19 // wager/279
+load 12 // v701
+int 16
+extract_uint64
+store 11 // deadline/280
+byte base64(93ETTQ==)
+load 13 // v700
+itob
+concat
+load 19 // wager/279
+itob
+concat
+load 11 // deadline/280
+itob
+concat
+log // up to 28 bytes
+// ^ log: "_reach_e0" [v700,wager/279,deadline/280] "_reach_e0(uint64,uint64,uint64)"
+load 13 // v700
+callsub l2_LF_timeCheck
+load 19 // wager/279
+callsub l3_LF_checkTxn_False
+// ^ CheckPay
+// at ./index.rsh:46:10:dot
+l4_LF_svsDump_1:
+load 20 // Bettor/278
+load 19 // wager/279
+itob
+concat
+load 11 // deadline/280
+itob
+concat
+int 112
+bzero
+concat
+int 1
+global Round
+updateStateNoOp:
+store 2 // GV_currentTime :: UInt
+store 1 // GV_currentStep :: UInt
+byte base64(AA==)
+dig 1
+extract 0 127
+app_global_put
+byte base64(AQ==)
+swap
+extract 127 33
+app_global_put
+byte base64()
+load 1 // GV_currentStep :: UInt
+itob
+load 2 // GV_currentTime :: UInt
+itob
+concat
+app_global_put
+txn OnCompletion
+int NoOp
+==
+assert
+// checked on completion
+callsub l17_LF_updateMbr
+updateState:
+load 3 // GV_wasntMeth :: Bool
+bnz done
+apiReturn_noCheck:
+byte base64(FR98dQ==)
+load 4 // GV_apiRet :: Null
+concat
+log // up to 4 bytes
+done:
+int 1
+return
+_reachi_1:
+txn Sender
+store 18 // Oracle/288
+int 1
+load 1 // GV_currentStep :: UInt
+==
+assert
+l5_LF_svsLoad_1:
+dup
+extract 0 32
+store 20 // Bettor/278
+dup
+int 32
+extract_uint64
+store 19 // wager/279
+int 40
+extract_uint64
+store 11 // deadline/280
+load 12 // v704
+int 0
+extract_uint64
+store 13 // v703
+byte base64(x7YK1Q==)
+load 13 // v703
+itob
+concat
+load 12 // v704
+extract 8 8
+concat
+log // up to 20 bytes
+// ^ log: "_reach_e1" [v703,returned/289] "_reach_e1(uint64,uint64)"
+load 13 // v703
+callsub l2_LF_timeCheck
+global Round
+load 11 // deadline/280
++
+store 14 // v298
+l6_LF_svsDump_2:
+load 20 // Bettor/278
+load 19 // wager/279
+itob
+concat
+load 11 // deadline/280
+itob
+concat
+load 18 // Oracle/288
+concat
+load 14 // v298
+itob
+concat
+int 72
+bzero
+concat
+int 2
+global Round
+b updateStateNoOp
+_reachi_10:
+int 10
+load 1 // GV_currentStep :: UInt
+==
+assert
+l7_LF_svsLoad_10:
+dup
+extract 0 32
+store 20 // Bettor/278
+dup
+int 32
+extract_uint64
+store 19 // wager/279
+dup
+extract 40 32
+store 18 // Oracle/288
+dup
+extract 72 32
+store 17 // Gambler/302
+dup
+extract 104 32
+store 16 // commitBettor/322
+dup
+int 136
+extract_uint64
+store 15 // weatherGambler/338
+dup
+int 144
+extract_uint64
+store 14 // saltBettor/353
+int 152
+extract_uint64
+store 13 // weatherBettor/354
+load 11 // v731
+int 0
+extract_uint64
+store 12 // v730
+byte base64(k6X2PA==)
+load 12 // v730
+itob
+concat
+load 11 // v731
+extract 8 8
+concat
+log // up to 20 bytes
+// ^ log: "_reach_e10" [v730,actualWinner/362] "_reach_e10(uint64,uint64)"
+load 12 // v730
+callsub l2_LF_timeCheck
+load 18 // Oracle/288
+txn Sender
+==
+assert
+// ^ Claim: sender correct
+// at ./index.rsh:91:10:dot
+load 16 // commitBettor/322
+load 14 // saltBettor/353
+itob
+load 13 // weatherBettor/354
+itob
+concat
+sha256
+==
+assert
+// ^ Claim
+// at reach standard library:69:17:application
+// at ./index.rsh:92:18:application call to "checkCommitment" (defined at: reach standard library:68:8:function exp)
+int 2
+load 19 // wager/279
+*
+// resource: R_Account
+load 20 // Bettor/278
+load 17 // Gambler/302
+int 2
+int 0
+load 13 // weatherBettor/354
+load 15 // weatherGambler/338
+<
+select
+int 2
+==
+select
+callsub l8_LF_makeTxn_False_False_False_True
+updateStateHalt:
+txn OnCompletion
+int DeleteApplication
+==
+assert
+// checked on completion
+callsub l17_LF_updateMbr
+// resource: R_Account
+int 0
+global CurrentApplicationAddress
+global CreatorAddress
+callsub l18_LF_makeTxn_False_True_False_True
+b updateState
+_reachi_2:
+txn Sender
+store 17 // Gambler/302
+int 2
+load 1 // GV_currentStep :: UInt
+==
+assert
+callsub l9_LF_svsLoad_2
+load 12 // v707
+btoi
+store 13 // v706
+byte base64(l073Fw==)
+load 13 // v706
+itob
+concat
+log // up to 12 bytes
+// ^ log: "_reach_e2" [v706] "_reach_e2(uint64)"
+load 13 // v706
+callsub l2_LF_timeCheck
+global Round
+load 14 // v298
+<
+assert
+load 19 // wager/279
+dup
++
+store 12 // v306
+load 19 // wager/279
+callsub l3_LF_checkTxn_False
+// ^ CheckPay
+// at ./index.rsh:59:11:dot
+global Round
+load 11 // deadline/280
++
+store 15 // v313
+l10_LF_svsDump_4:
+load 20 // Bettor/278
+load 19 // wager/279
+itob
+concat
+load 11 // deadline/280
+itob
+concat
+load 18 // Oracle/288
+concat
+load 17 // Gambler/302
+concat
+load 12 // v306
+itob
+concat
+load 15 // v313
+itob
+concat
+global ZeroAddress
+concat
+int 4
+global Round
+b updateStateNoOp
+_reachi_3:
+int 2
+load 1 // GV_currentStep :: UInt
+==
+assert
+callsub l9_LF_svsLoad_2
+load 12 // v710
+btoi
+store 11 // v709
+byte base64(1Axs1g==)
+load 11 // v709
+itob
+concat
+log // up to 12 bytes
+// ^ log: "_reach_e3" [v709] "_reach_e3(uint64)"
+load 11 // v709
+callsub l2_LF_timeCheck
+global Round
+load 14 // v298
+>=
+assert
+load 19 // wager/279
+// resource: R_Account
+load 20 // Bettor/278
+callsub l8_LF_makeTxn_False_False_False_True
+b updateStateHalt
+_reachi_4:
+int 4
+load 1 // GV_currentStep :: UInt
+==
+assert
+callsub l11_LF_svsLoad_4
+load 13 // v713
+int 0
+extract_uint64
+store 14 // v712
+load 13 // v713
+extract 8 32
+store 16 // commitBettor/322
+byte base64(T287RA==)
+load 14 // v712
+itob
+concat
+load 16 // commitBettor/322
+concat
+log // up to 44 bytes
+// ^ log: "_reach_e4" [v712,commitBettor/322] "_reach_e4(uint64,digest)"
+load 14 // v712
+callsub l2_LF_timeCheck
+global Round
+load 15 // v313
+<
+assert
+load 20 // Bettor/278
+txn Sender
+==
+assert
+// ^ Claim: sender correct
+// at ./index.rsh:68:10:dot
+global Round
+load 11 // deadline/280
++
+store 21 // v332
+l12_LF_svsDump_6:
+load 20 // Bettor/278
+load 19 // wager/279
+itob
+concat
+load 11 // deadline/280
+itob
+concat
+load 18 // Oracle/288
+concat
+load 17 // Gambler/302
+concat
+load 12 // v306
+itob
+concat
+load 16 // commitBettor/322
+concat
+load 21 // v332
+itob
+concat
+int 6
+global Round
+b updateStateNoOp
+_reachi_5:
+int 4
+load 1 // GV_currentStep :: UInt
+==
+assert
+callsub l11_LF_svsLoad_4
+load 13 // v716
+btoi
+store 11 // v715
+byte base64(gaqazw==)
+load 11 // v715
+itob
+concat
+log // up to 12 bytes
+// ^ log: "_reach_e5" [v715] "_reach_e5(uint64)"
+load 11 // v715
+callsub l2_LF_timeCheck
+global Round
+load 15 // v313
+>=
+assert
+load 20 // Bettor/278
+txn Sender
+==
+load 17 // Gambler/302
+txn Sender
+==
+||
+load 18 // Oracle/288
+txn Sender
+==
+||
+assert
+// ^ Claim: sender correct
+// at reach standard library:197:11:dot
+// at ./index.rsh:69:51:application call to "closeTo" (defined at: reach standard library:195:8:function exp)
+load 12 // v306
+// resource: R_Account
+load 17 // Gambler/302
+callsub l8_LF_makeTxn_False_False_False_True
+b updateStateHalt
+_reachi_6:
+int 6
+load 1 // GV_currentStep :: UInt
+==
+assert
+callsub l13_LF_svsLoad_6
+load 13 // v719
+int 0
+extract_uint64
+store 14 // v718
+load 13 // v719
+int 8
+extract_uint64
+store 15 // weatherGambler/338
+byte base64(SiHL/A==)
+load 14 // v718
+itob
+concat
+load 15 // weatherGambler/338
+itob
+concat
+log // up to 20 bytes
+// ^ log: "_reach_e6" [v718,weatherGambler/338] "_reach_e6(uint64,uint64)"
+load 14 // v718
+callsub l2_LF_timeCheck
+global Round
+load 21 // v332
+<
+assert
+load 17 // Gambler/302
+txn Sender
+==
+assert
+// ^ Claim: sender correct
+// at ./index.rsh:76:11:dot
+global Round
+load 11 // deadline/280
++
+store 21 // v348
+l14_LF_svsDump_8:
+load 20 // Bettor/278
+load 19 // wager/279
+itob
+concat
+load 18 // Oracle/288
+concat
+load 17 // Gambler/302
+concat
+load 12 // v306
+itob
+concat
+load 16 // commitBettor/322
+concat
+load 15 // weatherGambler/338
+itob
+concat
+load 21 // v348
+itob
+concat
+int 8
+global Round
+b updateStateNoOp
+_reachi_7:
+int 6
+load 1 // GV_currentStep :: UInt
+==
+assert
+callsub l13_LF_svsLoad_6
+load 13 // v722
+btoi
+store 11 // v721
+byte base64(caixow==)
+load 11 // v721
+itob
+concat
+log // up to 12 bytes
+// ^ log: "_reach_e7" [v721] "_reach_e7(uint64)"
+load 11 // v721
+callsub l2_LF_timeCheck
+global Round
+load 21 // v332
+>=
+assert
+load 20 // Bettor/278
+txn Sender
+==
+load 17 // Gambler/302
+txn Sender
+==
+||
+load 18 // Oracle/288
+txn Sender
+==
+||
+assert
+// ^ Claim: sender correct
+// at reach standard library:197:11:dot
+// at ./index.rsh:77:51:application call to "closeTo" (defined at: reach standard library:195:8:function exp)
+load 12 // v306
+// resource: R_Account
+load 20 // Bettor/278
+callsub l8_LF_makeTxn_False_False_False_True
+b updateStateHalt
+_reachi_8:
+int 8
+load 1 // GV_currentStep :: UInt
+==
+assert
+callsub l15_LF_svsLoad_8
+load 11 // v725
+int 0
+extract_uint64
+store 12 // v724
+load 11 // v725
+int 8
+extract_uint64
+store 14 // saltBettor/353
+load 11 // v725
+int 16
+extract_uint64
+store 13 // weatherBettor/354
+byte base64(EoZbwA==)
+load 12 // v724
+itob
+concat
+load 14 // saltBettor/353
+itob
+concat
+load 13 // weatherBettor/354
+itob
+concat
+log // up to 28 bytes
+// ^ log: "_reach_e8" [v724,saltBettor/353,weatherBettor/354] "_reach_e8(uint64,uint64,uint64)"
+load 12 // v724
+callsub l2_LF_timeCheck
+global Round
+load 21 // v348
+<
+assert
+load 20 // Bettor/278
+txn Sender
+==
+assert
+// ^ Claim: sender correct
+// at ./index.rsh:83:10:dot
+l16_LF_svsDump_10:
+load 20 // Bettor/278
+load 19 // wager/279
+itob
+concat
+load 18 // Oracle/288
+concat
+load 17 // Gambler/302
+concat
+load 16 // commitBettor/322
+concat
+load 15 // weatherGambler/338
+itob
+concat
+load 14 // saltBettor/353
+itob
+concat
+load 13 // weatherBettor/354
+itob
+concat
+int 10
+global Round
+b updateStateNoOp
+_reachi_9:
+int 8
+load 1 // GV_currentStep :: UInt
+==
+assert
+callsub l15_LF_svsLoad_8
+load 11 // v728
+btoi
+store 13 // v727
+byte base64(Y1dRXA==)
+load 13 // v727
+itob
+concat
+log // up to 12 bytes
+// ^ log: "_reach_e9" [v727] "_reach_e9(uint64)"
+load 13 // v727
+callsub l2_LF_timeCheck
+global Round
+load 21 // v348
+>=
+assert
+load 20 // Bettor/278
+txn Sender
+==
+load 17 // Gambler/302
+txn Sender
+==
+||
+load 18 // Oracle/288
+txn Sender
+==
+||
+assert
+// ^ Claim: sender correct
+// at reach standard library:197:11:dot
+// at ./index.rsh:84:51:application call to "closeTo" (defined at: reach standard library:195:8:function exp)
+load 12 // v306
+// resource: R_Account
+load 17 // Gambler/302
+callsub l8_LF_makeTxn_False_False_False_True
+b updateStateHalt
+_reachp_0:
+callsub l0_LF_wasntMeth
+int 100000
+l1_LF_mbrAdd:
+load 6 // GV_mbrAdd :: UInt
++
+store 6 // GV_mbrAdd :: UInt
+txna ApplicationArgs 1
+store 12 // v701
+b _reachi_0
+_reachp_1:
+callsub l0_LF_wasntMeth
+txna ApplicationArgs 1
+store 12 // v704
+b _reachi_1
+_reachp_10:
+callsub l0_LF_wasntMeth
+txna ApplicationArgs 1
+store 11 // v731
+b _reachi_10
+_reachp_2:
+callsub l0_LF_wasntMeth
+txna ApplicationArgs 1
+store 12 // v707
+b _reachi_2
+_reachp_3:
+callsub l0_LF_wasntMeth
+txna ApplicationArgs 1
+store 12 // v710
+b _reachi_3
+_reachp_4:
+callsub l0_LF_wasntMeth
+txna ApplicationArgs 1
+store 13 // v713
+b _reachi_4
+_reachp_5:
+callsub l0_LF_wasntMeth
+txna ApplicationArgs 1
+store 13 // v716
+b _reachi_5
+_reachp_6:
+callsub l0_LF_wasntMeth
+txna ApplicationArgs 1
+store 13 // v719
+b _reachi_6
+_reachp_7:
+callsub l0_LF_wasntMeth
+txna ApplicationArgs 1
+store 13 // v722
+b _reachi_7
+_reachp_8:
+callsub l0_LF_wasntMeth
+txna ApplicationArgs 1
+store 11 // v725
+b _reachi_8
+_reachp_9:
+callsub l0_LF_wasntMeth
+txna ApplicationArgs 1
+store 11 // v728
+b _reachi_9
+alloc:
+int 0
+txn GlobalNumUint
+==
+assert
+int 3
+txn GlobalNumByteSlice
+==
+assert
+int 0
+txn LocalNumUint
+==
+assert
+int 0
+txn LocalNumByteSlice
+==
+assert
+callsub l0_LF_wasntMeth
+int 160
+bzero
+int 0
+int 0
+b updateStateNoOp
+apiReturn_check:
+txn OnCompletion
+int NoOp
+==
+assert
+// checked on completion
+b apiReturn_noCheck
+l19_LF_makeTxnK_False_True:
+int 0
+itxn_field Fee
+int pay
+itxn_field TypeEnum
+itxn_field Receiver
+itxn_field Amount
+itxn_submit
+retsub
+updateMbr_eq:
+pop
+retsub
+updateMbr_neg:
+swap
+-
+dup
+store 6 // GV_mbrAdd :: UInt
+global CreatorAddress
+callsub l8_LF_makeTxn_False_False_False_True
+retsub
+updateMbr_pos_eq:
+-
+dup
+bz updateMbr_eq
+dup
+store 6 // GV_mbrAdd :: UInt
+callsub l3_LF_checkTxn_False
+retsub
+l0_LF_wasntMeth:
+int 1
+store 3 // GV_wasntMeth :: Bool
+retsub
+l2_LF_timeCheck:
+dup
+int 0
+==
+swap
+load 2 // GV_currentTime :: UInt
+==
+||
+assert
+retsub
+l8_LF_makeTxn_False_False_False_True:
+itxn_begin
+b l19_LF_makeTxnK_False_True
+l3_LF_checkTxn_False:
+// resource: R_Txn
+txn GroupIndex
+load 0 // GV_txnCounter :: UInt
+int 1
++
+dup
+store 0 // GV_txnCounter :: UInt
+-
+dupn 2
+gtxns Receiver
+global CurrentApplicationAddress
+==
+assert
+gtxns TypeEnum
+int pay
+==
+assert
+gtxns Amount
+==
+assert
+retsub
+l9_LF_svsLoad_2:
+dup
+extract 0 32
+store 20 // Bettor/278
+dup
+int 32
+extract_uint64
+store 19 // wager/279
+dup
+int 40
+extract_uint64
+store 11 // deadline/280
+dup
+extract 48 32
+store 18 // Oracle/288
+int 80
+extract_uint64
+store 14 // v298
+retsub
+l17_LF_updateMbr:
+load 6 // GV_mbrAdd :: UInt
+load 7 // GV_mbrSub :: UInt
+dup2
+>=
+bz updateMbr_neg
+b updateMbr_pos_eq
+l15_LF_svsLoad_8:
+dup
+extract 0 32
+store 20 // Bettor/278
+dup
+int 32
+extract_uint64
+store 19 // wager/279
+dup
+extract 40 32
+store 18 // Oracle/288
+dup
+extract 72 32
+store 17 // Gambler/302
+dup
+int 104
+extract_uint64
+store 12 // v306
+dup
+extract 112 32
+store 16 // commitBettor/322
+dup
+int 144
+extract_uint64
+store 15 // weatherGambler/338
+int 152
+extract_uint64
+store 21 // v348
+retsub
+l13_LF_svsLoad_6:
+dup
+extract 0 32
+store 20 // Bettor/278
+dup
+int 32
+extract_uint64
+store 19 // wager/279
+dup
+int 40
+extract_uint64
+store 11 // deadline/280
+dup
+extract 48 32
+store 18 // Oracle/288
+dup
+extract 80 32
+store 17 // Gambler/302
+dup
+int 112
+extract_uint64
+store 12 // v306
+dup
+extract 120 32
+store 16 // commitBettor/322
+int 152
+extract_uint64
+store 21 // v332
+retsub
+l11_LF_svsLoad_4:
+dup
+extract 0 32
+store 20 // Bettor/278
+dup
+int 32
+extract_uint64
+store 19 // wager/279
+dup
+int 40
+extract_uint64
+store 11 // deadline/280
+dup
+extract 48 32
+store 18 // Oracle/288
+dup
+extract 80 32
+store 17 // Gambler/302
+dup
+int 112
+extract_uint64
+store 12 // v306
+int 120
+extract_uint64
+store 15 // v313
+retsub
+l18_LF_makeTxn_False_True_False_True:
+itxn_begin
+itxn_field CloseRemainderTo
+b l19_LF_makeTxnK_False_True
